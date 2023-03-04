@@ -3,16 +3,19 @@ import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { useHistory } from "react-router";
 import Gratitude from "./../assets/grForm.png";
+import { toast } from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { notEkleAPI } from "../actions";
 
 export default function PostForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: "onChange" });
-
+  } = useForm({ mode: "onChange" });  
+  const dispatch=useDispatch();
   const history = useHistory();
-
+  const notify = () => toast("Not Eklendii!");
   function onSubmit(data) {
     const yeniNot = {
       id: nanoid(),
@@ -21,14 +24,13 @@ export default function PostForm() {
         .filter((v) => v !== "")
         .join("|"),
     };
-
-    // burada ilgili eylemi dispatch edin
-    // toast mesajı gösterin
-    // sonra aşağıdaki satırı aktifleştirin
-    // setTimeout(() => history.push("/notlar"), 2000);
+   
+    dispatch(notEkleAPI(yeniNot));
+    notify();
+   setTimeout(() => history.push("/notlar"), 2000);
   }
 
-  const inputCx = "border border-zinc-300 h-9 rounded-none text-sm px-2 w-full";
+  const inputCx = "border border-zinc-300 h-9 rounded-[2px] bg-amber-200 text-sm px-2 w-full";
 
   return (
     <div className="flex flex-col sm:flex-row beyazKutu">
@@ -39,7 +41,7 @@ export default function PostForm() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 p-8 flex-1"
+        className="flex flex-col  gap-3 p-8 flex-1"
       >
         <h1>Minnettar hissediyorum, çünkü...</h1>
         <p className="text-xs">
@@ -47,7 +49,7 @@ export default function PostForm() {
           listelemekten, minnettar olunan şeylere dair daha uzun ve kapsamlı
           yansıtmalara kadar pek çok şeyden oluşabilir.
         </p>
-        <p className="text-stone-700 my-3 text-xs">
+        <p className="text-stone-700  my-3 text-xs">
           Her gün belli saatlerde 3 maddeden oluşan bir liste
           yapmak, bu alışkanlığa iyi bir başlangıç noktası sayılır.
         </p>

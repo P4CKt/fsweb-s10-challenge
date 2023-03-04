@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
+import Fav from "./components/Fav";
 import Img from "./assets/gratitude.jpg";
+import { notBellek } from "./actions";
+import { useDispatch } from "react-redux";
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(notBellek());
+  }, []);
+
   return (
     <div>
-      <div className="bg-white shadow mb-8">
+      <div className="bg-lime-50 shadow mb-8">
         <nav className="flex gap-2 justify-center max-w-xl mx-auto text-zinc-500">
           <NavLink
             to="/"
@@ -31,13 +39,20 @@ export default function App() {
           >
             Yeni Not
           </NavLink>
+          <NavLink
+            to="/fav"
+            className="p-4 pb-3 tracking-tighter"
+            activeClassName="text-amber-600"
+          >
+            Yıldızlı Notlar
+          </NavLink>
         </nav>
       </div>
       <Switch>
         <Route exact path="/">
-          <div className="max-w-xl mx-auto px-4 pb-8">
+          <div className="max-w-xl rounded-[10px] mx-auto px-4 pb-8">
             <div className="beyazKutu">
-              <img src={Img} alt="" />
+              <img className="rounded-[10px]" src={Img} alt="" />
               <div className="px-8 pt-7 pb-6 text-sm">
                 <h1 className="text-3xl text-amber-600">
                   Minnet Günlüğü Nedir?
@@ -63,6 +78,12 @@ export default function App() {
         <Route path="/notlar">
           <div className="max-w-md mx-auto px-4 pb-8">
             <PostList />
+          </div>
+        </Route>
+
+        <Route path="/fav">
+          <div className="max-w-md mx-auto px-4 pb-8">
+            <Fav />
           </div>
         </Route>
       </Switch>
