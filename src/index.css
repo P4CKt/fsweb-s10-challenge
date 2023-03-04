@@ -18,7 +18,8 @@ code {
 }
 
 .myButton {
-  @apply px-4 py-2 transition-colors inline-flex gap-2 items-center font-bold bg-amber-700 hover:bg-amber-600 text-white self-end;
+  @apply px-4 py-2 transition-colors inline-flex gap-2 items-center font-bold bg-amber-700 hover:bg-amber-600 text-white self-end
+  rounded-[5px];
 }
 
 .beyazKutu {
