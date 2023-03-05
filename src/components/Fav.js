@@ -12,7 +12,7 @@ export default function Fav() {
   const fav = useSelector((myStore) => myStore.fav);
   const dispatch = useDispatch();
   const notify = () => toast("Favori Silindii ");
-
+  const nFav = fav.sort((a, b) => new Date(b.date) - new Date(a.date));
   function handleFavSil(event) {
     dispatch(favSilAPI(event.id));
     notify();
@@ -20,9 +20,11 @@ export default function Fav() {
     // burada ilgili eylemi dispatch edin
     // sonra toast mesajı gösterin
   }
-  return (
+  return fav.length === 0 ? (
+    <div className="beyazKutu text-center p-6">Hiç Yıldızlı Notunuz yok</div>
+  ) : (
     <div>
-      {fav.map((not) => (
+      {nFav.map((not) => (
         <div key={not.id} className="beyazKutu p-8 pb-6 mb-4 text-sm">
           <div className="flex justify-between">
             <h1>

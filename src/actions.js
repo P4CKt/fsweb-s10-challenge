@@ -29,7 +29,6 @@ export const favEkleAPI = (favNot) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch(favEkle(res.data.json));
-        console.log("eklendiii", res.data.json);
       }
     })
     .catch((error) => console.log(error));

@@ -1,4 +1,5 @@
 import { NOT_EKLE, NOT_SIL, NOT_BELLEK, NOT_FAV, FAV_SIL } from "./actions";
+import { toast } from "react-toastify";
 const s10chLocalStorageKey = "s10ch";
 const baslangicDegerleri = {
   notlar: [
@@ -16,6 +17,7 @@ const baslangicDegerleri = {
     },
   ],
 };
+const notify = (item) => toast(item);
 
 function localStorageStateYaz(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
@@ -42,6 +44,7 @@ export function reducer(state = baslangicDegerleri, action) {
       localStorageStateYaz(s10chLocalStorageKey, newArr);
 
       return newArr;
+
     case NOT_BELLEK:
       return baslangicNotlariniGetir(s10chLocalStorageKey);
 
@@ -64,12 +67,18 @@ export function reducer(state = baslangicDegerleri, action) {
       return favSil;
 
     case NOT_FAV:
-      localStorageStateYaz(s10chLocalStorageKey, {
-        ...state,
-        fav: [...state.fav, action.payload],
-      });
-
-      return { ...state, fav: [...state.fav, action.payload] };
+      const contr = state.fav;
+      if (!contr.find((item) => item.body === action.payload.body)) {
+        localStorageStateYaz(s10chLocalStorageKey, {
+          ...state,
+          fav: [...state.fav, action.payload],
+        });
+        notify("Favorilere Eklendi");
+        return { ...state, fav: [...state.fav, action.payload] };
+      } else {
+        notify("Aynısı Var :P");
+        return state;
+      }
 
     default:
       return state;

@@ -30,7 +30,7 @@ export default function Post(props) {
     };
     event.preventDefault();
     dispatch(favEkleAPI(yeniFav));
-    toast("Fav Eklendii ");
+
     console.log(yeniFav.id);
     // burada ilgili eylemi dispatch edin
     // sonra toast mesajı gösterin
