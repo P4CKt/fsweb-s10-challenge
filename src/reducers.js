@@ -46,6 +46,7 @@ export function reducer(state = baslangicDegerleri, action) {
       return newArr;
 
     case NOT_BELLEK:
+      console.log(localStorageStateOku(s10chLocalStorageKey));
       return baslangicNotlariniGetir(s10chLocalStorageKey);
 
     case NOT_SIL:
@@ -53,7 +54,7 @@ export function reducer(state = baslangicDegerleri, action) {
         ...state,
         notlar: state.notlar.filter((item) => item.id !== action.payload),
       };
-      localStorageStateYaz(s10chLocalStorageKey, notSil.notlar);
+      localStorageStateYaz(s10chLocalStorageKey, notSil);
 
       return notSil;
 
